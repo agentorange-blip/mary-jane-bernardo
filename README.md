@@ -4,7 +4,7 @@ A personal portfolio showcasing my administrative and operations experience, cus
 
 ## Live Website
 
-[View my portfolio](https://agentorange-blip.github.io/mary-jane-bernardo/)
+[View my portfolio](https://agentorange-blip.github.io/)
 
 ## GitHub Repository
 
@@ -19,6 +19,7 @@ A personal portfolio showcasing my administrative and operations experience, cus
 ## Featured Projects
 
 - **ETHIQ — Interactive Ethics Website:** An academic web project.
+- **TECHVAULT — Appliance Repair & Diagnostics Hub:** A technician-focused appliance reference and diagnostics project; currently in progress.
 - **MJ Creates:** Digital and printable design work.
 - **TEK R US CRM — Login Interface:** A screenshot preview only. This portfolio does not publish CRM source code or private operational data.
 
@@ -41,7 +42,7 @@ For local development, use VS Code Live Server or another static server.
 
 This portfolio is published using **GitHub Pages**.
 
-Live URL: https://agentorange-blip.github.io/mary-jane-bernardo/
+Live URL: https://agentorange-blip.github.io/
 
 ## Credits, Image Rights, and Privacy
 

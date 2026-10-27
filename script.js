@@ -11,3 +11,41 @@ const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isInte
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 const counter=document.querySelector('[data-count]');
 if(counter){const co=new IntersectionObserver(es=>{if(es[0].isIntersecting){let n=0;const target=+counter.dataset.count;const step=()=>{n=Math.min(target,n+1);counter.textContent=n;if(n<target)requestAnimationFrame(step)};step();co.disconnect()}},{threshold:.6});co.observe(counter)}
+
+
+/* Contact form: open a prefilled Gmail compose window (works without a desktop mail app) */
+(() => {
+  const form = document.getElementById('portfolio-contact-form');
+  if (!form) return;
+  const note = document.getElementById('contact-form-note');
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!form.reportValidity()) {
+      note.textContent = 'Please complete all fields and enter a valid email address.';
+      return;
+    }
+
+    const data = new FormData(form);
+    const name = String(data.get('name') || '').trim();
+    const email = String(data.get('email') || '').trim();
+    const subject = String(data.get('subject') || '').trim();
+    const message = String(data.get('message') || '').trim();
+    const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+    const composeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent('maryjane.brnrd0401@gmail.com')}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    note.textContent = 'Opening Gmail compose. Review your message and click Send in Gmail.';
+    window.location.assign(composeUrl);
+  });
+})();
+
+
+/* Contact message length indicator */
+(() => {
+  const field = document.querySelector('#portfolio-contact-form textarea[name="message"]');
+  const counter = document.getElementById('message-counter');
+  if (!field || !counter) return;
+  const update = () => { counter.textContent = `${field.value.length} / 500`; };
+  field.addEventListener('input', update);
+  update();
+})();

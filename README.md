@@ -1,55 +1,82 @@
 # Mary Jane Bernardo — Personal Portfolio
 
-A personal portfolio showcasing my administrative and operations experience, customer support background, creative work, academic projects, and ongoing technology learning.
+A personal portfolio website presenting my background, professional experience, skills, selected projects, education, achievements, creative interests, and running journey. The goal is to introduce my work and learning progress in one accessible place.
 
 ## Live Website
 
-[View my portfolio](https://agentorange-blip.github.io/)
+**Portfolio:** https://agentorange-blip.github.io/mary-jane-bernardo/#home  
+**Repository:** https://github.com/agentorange-blip/mary-jane-bernardo
 
-## GitHub Repository
+## Project Objectives
 
-[View the public source code](https://github.com/agentorange-blip/mary-jane-bernardo)
+- Present my professional profile and career experience.
+- Showcase selected academic, creative, and technology projects.
+- Organize tools and skills into clear categories.
+- Provide simple navigation and contact options.
+- Practice front-end development and publish a live portfolio.
 
-## Technologies
+## Technologies Used
 
-- **HTML5** — semantic page structure
-- **CSS3** — styling, responsive layouts, and animations
-- **JavaScript** — navigation and page interactions
+- **HTML5:** page structure, content sections, navigation, and accessible labels.
+- **CSS3:** typography, visual design, layout, responsive styling, reveal effects, and motion.
+- **JavaScript:** mobile navigation toggle, scroll progress/header state, reveal-on-scroll behavior, and animated counter.
+- **GitHub / GitHub Pages:** source-code hosting and public website deployment.
+- **Google Fonts:** DM Sans and Playfair Display (loaded externally).
 
-## Featured Projects
+## Website Sections
 
-- **ETHIQ — Interactive Ethics Website:** An academic web project.
-- **TECHVAULT — Appliance Repair & Diagnostics Hub:** A technician-focused appliance reference and diagnostics project; currently in progress.
-- **MJ Creates:** Digital and printable design work.
-- **TEK R US CRM — Login Interface:** A screenshot preview only. This portfolio does not publish CRM source code or private operational data.
+- Home / introduction
+- About
+- Services
+- Experience
+- Tools and technologies
+- Featured projects
+- Education and achievements
+- Running journey
+- Beyond my career
+- Contact
 
-## Portfolio Features
+## Featured Work
 
-- Responsive portfolio sections
-- Mobile navigation and animated presentation
-- Project, education, and achievement highlights
-- Contact links
+- **ETHIQ:** an academic ethics website project.
+- **TECHVAULT:** an appliance research and diagnostics reference project, in development.
+- **MJ Creates:** creative and printable design work.
+- **TEK R US CRM:** a portfolio preview of a CRM/login interface. The portfolio does not publish the CRM's private source code or operational data.
+
+## Key Features
+
+- Single-page section navigation using anchor links.
+- Responsive navigation menu for compact/mobile layouts.
+- Scroll progress indicator and header state on scroll.
+- Reveal-on-scroll presentation effects.
+- Animated number counter where configured.
+- Contact interaction that opens a prefilled Gmail compose window; this is not a server-backed message form.
+- Project imagery and MJB branding.
 
 ## Run Locally
 
 1. Download or clone this repository.
 2. Open the project folder.
-3. Open `index.html` in a modern web browser.
-
-For local development, use VS Code Live Server or another static server.
+3. Open `index.html` in a modern browser.
+4. For local development, use VS Code Live Server or another static server if desired.
 
 ## Deployment
 
-This portfolio is published using **GitHub Pages**.
+This website is published with GitHub Pages. The live link above points to the project site. After committing changes, allow GitHub Pages to finish publishing, then open the public link and check the latest changes.
 
-Live URL: https://agentorange-blip.github.io/
+## Suggested Verification Before Submission
+
+- Test all navigation links, project links, and contact actions.
+- Check the page at desktop and mobile widths.
+- Confirm all images load and there is no placeholder content.
+- Test the public site in a private/incognito browser window.
+- Confirm the GitHub repository is public and includes `README.md` and all required assets.
+- Explain which features you implemented and be ready to show their code.
 
 ## Credits, Image Rights, and Privacy
 
-Project images and other visual assets remain the property of their respective creators or owners. Before publishing, confirm that you have the necessary permission or license to display each image publicly, and provide attribution when required.
-
-Do not upload passwords, customer information, confidential business records, or private contact details. Use sanitized screenshots and protect sensitive information when showcasing projects.
+Use only images and assets you created, own, or have permission to display. Add attribution when a license requires it. Do not publish passwords, customer information, confidential business records, or private contact details. Sanitize project screenshots.
 
 ## Project Note
 
-This portfolio is intended to present selected work and learning experiences. Descriptions should accurately reflect my own contributions and the features actually implemented.
+This README describes the current front-end project. Project descriptions should accurately reflect my own contributions. The contact action opens an email compose flow and should not be described as a backend form submission. Verify responsive behavior and interactions on target devices before claiming testing is complete.

@@ -49,3 +49,17 @@ if(counter){const co=new IntersectionObserver(es=>{if(es[0].isIntersecting){let 
   field.addEventListener('input', update);
   update();
 })();
+
+// Floating Back to Top button (text arrow; no SVG dependency)
+(() => {
+  const button = document.getElementById('backToTop');
+  if (!button) return;
+  const updateVisibility = () => {
+    button.classList.toggle('visible', window.scrollY > 420);
+  };
+  window.addEventListener('scroll', updateVisibility, { passive: true });
+  updateVisibility();
+  button.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();

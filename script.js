@@ -63,3 +63,203 @@ if(counter){const co=new IntersectionObserver(es=>{if(es[0].isIntersecting){let 
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 })();
+
+
+/* Interactive 2D face illusion
+   Uses the supplied expression PNGs directly; no WebGL or 3D geometry is required. */
+(() => {
+  const stage = document.getElementById('interactivePortrait');
+  const canvas = document.getElementById('faceCanvas');
+  if (!stage || !canvas) return;
+
+  const ctx = canvas.getContext('2d', { alpha: false });
+  if (!ctx) return;
+
+  const states = [
+    'test','closed','half',
+    'up','down','left','right',
+    'upleft','upright','downleft','downright',
+    'grin','hearts','angry','surprised','wink'
+  ];
+
+  const images = {};
+  let currentState = 'test';
+  let pointerInside = false;
+  let specialUntil = 0;
+  let specialState = null;
+  let blinkTimer = null;
+  let resizeObserver = null;
+
+  const loadImage = (name) => new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => { images[name] = img; resolve(img); };
+    img.onerror = reject;
+    img.src = `assets/face-states/${name}.png`;
+  });
+
+  const drawCover = (img, w, h) => {
+    const iw = img.naturalWidth || img.width;
+    const ih = img.naturalHeight || img.height;
+    const scale = Math.max(w / iw, h / ih);
+    const dw = iw * scale;
+    const dh = ih * scale;
+    const dx = (w - dw) / 2;
+    const dy = (h - dh) / 2;
+    ctx.drawImage(img, dx, dy, dw, dh);
+  };
+
+  const resizeCanvas = () => {
+    const rect = stage.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+    canvas.style.width = `${rect.width}px`;
+    canvas.style.height = `${rect.height}px`;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    drawState(currentState);
+  };
+
+  const drawState = (name) => {
+    const img = images[name] || images.test;
+    if (!img) return;
+    const rect = stage.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    ctx.clearRect(0, 0, rect.width, rect.height);
+    drawCover(img, rect.width, rect.height);
+  };
+
+  const setState = (name) => {
+    if (!images[name]) return;
+    currentState = name;
+    drawState(name);
+  };
+
+  const directionFromPointer = (event) => {
+    const rect = canvas.getBoundingClientRect();
+    const nx = ((event.clientX - rect.left) / rect.width) - 0.5;
+    const ny = ((event.clientY - rect.top) / rect.height) - 0.5;
+    const ax = Math.abs(nx);
+    const ay = Math.abs(ny);
+
+    if (ax < 0.10 && ay < 0.10) return 'test';
+    if (ay > ax * 1.8) return ny < 0 ? 'up' : 'down';
+    if (ax > ay * 1.8) return nx < 0 ? 'left' : 'right';
+
+    if (nx < 0 && ny < 0) return 'upleft';
+    if (nx > 0 && ny < 0) return 'upright';
+    if (nx < 0 && ny > 0) return 'downleft';
+    return 'downright';
+  };
+
+  const restorePointerState = () => {
+    if (Date.now() < specialUntil) return;
+    if (pointerInside) return;
+    setState('test');
+  };
+
+  const triggerSpecial = (name, duration = 1200) => {
+    if (!images[name]) return;
+    specialState = name;
+    specialUntil = Date.now() + duration;
+    setState(name);
+    window.setTimeout(() => {
+      if (Date.now() >= specialUntil) {
+        specialState = null;
+        if (pointerInside && lastPointerEvent) setState(directionFromPointer(lastPointerEvent));
+        else setState('test');
+      }
+    }, duration + 20);
+  };
+
+  let lastPointerEvent = null;
+
+  canvas.addEventListener('pointerenter', (event) => {
+    pointerInside = true;
+    lastPointerEvent = event;
+    if (!specialState) setState(directionFromPointer(event));
+  });
+
+  canvas.addEventListener('pointermove', (event) => {
+    pointerInside = true;
+    lastPointerEvent = event;
+    if (!specialState && Date.now() >= specialUntil) {
+      setState(directionFromPointer(event));
+    }
+  });
+
+  canvas.addEventListener('pointerleave', () => {
+    pointerInside = false;
+    lastPointerEvent = null;
+    if (!specialState) setState('test');
+  });
+
+  canvas.addEventListener('pointerdown', (event) => {
+    // On touch, give the portrait a small playful reaction without
+    // requiring a second interaction.
+    if (event.pointerType === 'touch') {
+      triggerSpecial('wink', 850);
+    }
+  });
+
+  canvas.addEventListener('click', (event) => {
+    if (event.pointerType === 'mouse') {
+      const sequence = ['grin','hearts','surprised','wink'];
+      const next = sequence[Math.floor(Math.random() * sequence.length)];
+      triggerSpecial(next, 950);
+    }
+  });
+
+  const scheduleBlink = () => {
+    window.clearTimeout(blinkTimer);
+    const delay = 3200 + Math.random() * 4300;
+    blinkTimer = window.setTimeout(() => {
+      if (!specialState) {
+        const previous = currentState;
+        setState('half');
+        window.setTimeout(() => {
+          if (!specialState) {
+            setState('closed');
+            window.setTimeout(() => {
+              if (!specialState) {
+                setState('half');
+                window.setTimeout(() => {
+                  if (!specialState) {
+                    if (pointerInside && lastPointerEvent) setState(directionFromPointer(lastPointerEvent));
+                    else setState('test');
+                  }
+                  scheduleBlink();
+                }, 90);
+              } else {
+                scheduleBlink();
+              }
+            }, 105);
+          } else {
+            scheduleBlink();
+          }
+        }, 75);
+      } else {
+        scheduleBlink();
+      }
+    }, delay);
+  };
+
+  Promise.all(states.map(loadImage))
+    .then(() => {
+      stage.classList.add('face-ready');
+      resizeCanvas();
+      setState('test');
+      scheduleBlink();
+
+      if ('ResizeObserver' in window) {
+        resizeObserver = new ResizeObserver(resizeCanvas);
+        resizeObserver.observe(stage);
+      } else {
+        window.addEventListener('resize', resizeCanvas, { passive: true });
+      }
+    })
+    .catch(() => {
+      // Keep the original portrait visible if an expression asset fails.
+      stage.classList.remove('face-ready');
+    });
+})();

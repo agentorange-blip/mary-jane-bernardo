@@ -648,3 +648,30 @@ body {
  .tools-grid .tool-card-head .tool-icon{width:52px;height:52px;flex-basis:52px;font-size:27px!important}
  .tools-grid .tool-card-head .tool-arrow{width:38px;height:38px;flex-basis:38px;font-size:24px!important}
 }
+
+
+/* Interactive 2D face illusion */
+#interactivePortrait{isolation:isolate}
+#interactivePortrait .portrait-fallback{
+  transition:opacity .2s ease;
+}
+#interactivePortrait.face-ready .portrait-fallback{opacity:0}
+#faceCanvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  z-index:2;
+  border-radius:46% 46% 16% 16%;
+  box-shadow:var(--shadow);
+  cursor:crosshair;
+  touch-action:none;
+  opacity:0;
+  transition:opacity .2s ease;
+}
+#interactivePortrait.face-ready #faceCanvas{opacity:1}
+#interactivePortrait.face-loading #faceCanvas{opacity:0}
+@media (pointer:coarse){
+  #faceCanvas{cursor:pointer}
+}

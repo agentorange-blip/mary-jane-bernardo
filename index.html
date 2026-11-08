@@ -28,7 +28,12 @@
     <div class="hero-actions"><a class="btn btn-dark" href="#projects">View My Work <span>→</span></a><a class="btn btn-light" href="#contact">Let's Connect</a></div>
     <div class="hero-signature">Work · Create · Run · Grow</div>
   </div>
-  <div class="hero-photo reveal reveal-delay"><div class="photo-ring"></div><img src="assets/mary-jane.png" alt="Professional portrait of Mary Jane Bernardo"><div class="floating-note">Always learning.<br><b>Always creating.</b></div></div>
+  <div class="hero-photo reveal reveal-delay" id="interactivePortrait">
+  <div class="photo-ring"></div>
+  <img class="portrait-fallback" src="assets/mary-jane.png" alt="Professional portrait of Mary Jane Bernardo">
+  <canvas id="faceCanvas" aria-label="Interactive portrait of Mary Jane Bernardo"></canvas>
+  <div class="floating-note">Always learning.<br><b>Always creating.</b></div>
+</div>
 </section>
 <section class="intro-strip"><div class="marquee"><span>ADMINISTRATION</span><i>✦</i><span>CUSTOMER SUPPORT</span><i>✦</i><span>OPERATIONS</span><i>✦</i><span>DIGITAL PROJECTS</span><i>✦</i><span>CREATIVE WORK</span><i>✦</i><span>RUNNING</span><i>✦</i></div></section>
 <section class="section about" id="about">
